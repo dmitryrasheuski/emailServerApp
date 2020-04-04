@@ -1,0 +1,25 @@
+version: "3"
+
+volumes:
+    db:
+
+services:
+
+    back:
+        build: back/
+        restart: always
+        volumes:
+            - db:/root/db
+        env_file:
+            - environment.txt
+        ports:
+            - 8080:8080
+
+    front:
+        build: front/
+        restart: always
+        environment:
+            - BACK_HOST=back
+            - BACK_PORT=8080
+        ports:
+            - 8084:8084
